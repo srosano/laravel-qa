@@ -22,4 +22,14 @@ class Question extends Model
 
     }
     
+    public function getUrlAttribute(){
+        return route('questions.show', $this->id); 
+    }
+
+
+    public function getCreatedDateAttribute(){
+        return $this->created_at->diffForHumans();
+    }
+
+
 }
