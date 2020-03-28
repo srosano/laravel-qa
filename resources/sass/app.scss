@@ -13,8 +13,8 @@
 }
 
 .counters{
-    margin-right: 30px; 
-    font-size: 10px; 
+    margin-right: 30px;
+    font-size: 10px;
     text-align: center;
 
     strong {
@@ -28,7 +28,7 @@
     }
 
     .status{
-        
+
         &.unanswered {
             border: none;
         }
@@ -50,4 +50,8 @@
     .view{
         margin-top: 10px;
     }
+}
+
+form.form-delete {
+    display: inline;
 }
