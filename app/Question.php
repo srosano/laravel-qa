@@ -12,18 +12,18 @@ class Question extends Model
     public function user() {
 
         return $this->belongsTo(User::class);
-    
+
     }
-    
+
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;
         $this->attributes['slug'] = Str::slug($value);
 
     }
-    
+
     public function getUrlAttribute(){
-        return route('questions.show', $this->id); 
+        return route('questions.show', $this->slug);
     }
 
 
@@ -40,6 +40,13 @@ class Question extends Model
             return "answered";
         }
         return "unanswered";
+    }
+
+    public function getBodyHtmlAttribute(){
+       #\Debugbar::info(\Parsedown::instance());
+
+       return \Parsedown::instance()->text($this->body);
+
     }
 
 }
