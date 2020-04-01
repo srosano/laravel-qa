@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+//use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Question extends Model
@@ -51,7 +51,7 @@ class Question extends Model
     }
 
     public function answers(){
-        return $this-hasMany(Answer::class);
+        return $this->hasMany(Answer::class);
         // $question->answers()->count()
         // foreach($question->answers as $answer)
     }
