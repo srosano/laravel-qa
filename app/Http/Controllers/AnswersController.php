@@ -16,11 +16,7 @@ class AnswersController extends Controller
      */
     public function store(Question $question, Request $request)
     {
-        $request->validate([
-            'body'=> 'required'
-        ]);
-
-        $question->answers()->create($request -> validate([
+        $question->answers()->create($request->validate([
             'body' => 'required'
         ]) + ['user_id' => \Auth::id()]);
 

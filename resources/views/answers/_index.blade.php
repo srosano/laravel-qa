@@ -6,7 +6,7 @@
                     <h2>{{ $answersCount . " " . Str::plural('Answer',$answersCount) }}</h2>
                 </div>
                 <hr>
-                @include('layouts._messages')
+                @include ('layouts._messages')
 
                 @foreach ($answers as $answer)
                 <div class="media">
@@ -19,17 +19,19 @@
                             <i class="fa fa-caret-down fa-3x"></i>
                         </a>
                         @can('accept', $answer)
-                        <a title="Mark this answer as best answer" class="{{ $answer->status }} mt-2"
-                            onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();">
+                        <a title="Mark this answer as best answer"
+                        class="{{ $answer->status }} mt-2"
+                            onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();"
+                            >
                             <i class="fa fa-check fa-2x"></i>
                         </a>
-                        <form style="display:none;" action="{{ route('answers.accept', $answer->id) }}"
-                            id="accept-answer-{{ $answer->id }}" method="POST">
+                        <form id="accept-answer-{{ $answer->id }}" action="{{ route('answers.accept', $answer->id) }}" method="POST" style="display:none;">
                             @csrf
                         </form>
                         @else
                         @if ($answer->is_best)
-                        <a title="The question owner accept this answer as best answer" class="{{ $answer->status }} mt-2">
+                        <a title="The question owner accept this answer as best answer"
+                        class="{{ $answer->status }} mt-2">
                             <i class="fa fa-check fa-2x"></i>
                         </a>
                         @endif

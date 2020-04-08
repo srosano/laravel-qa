@@ -12,6 +12,7 @@
                         <a href="{{ route('questions.create') }}" class="btn btn-outline-secondary">Ask Question</a>
                     </div>
                 </div>
+
             </div>
 
                 <div class="card-body">
@@ -30,7 +31,7 @@
                             </div>
                         </div>
                             <div class="media-body">
-                                <div class="d-flex align-item center">
+                                <div class="d-flex align-items-center">
                                 <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
                                 <div class="ml-auto">
                                     @can('update', $question)
