@@ -73,11 +73,13 @@ class User extends Authenticatable
      *    'email_verified_at' => 'datetime',
      *];*/
 
-    public function questions() {
+    public function questions()
+    {
         return $this->hasMany(Question::class);
     }
 
-    public function getUrlAttribute(){
+    public function getUrlAttribute()
+    {
         //return route('questions.show', $this->id);
         return '#';
     }
@@ -87,12 +89,12 @@ class User extends Authenticatable
         return $this->hasMany(Answer::class);
     }
 
-    public function getAvatarAttribute(){
+    public function getAvatarAttribute()
+    {
         $email = $this->email;
         $size = 32;
 
-        return "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?s=" . $size;
-
+        return "https://www.gravatar.com/avatar/" . md5(strtolower(trim($email))) . "?s=" . $size;
     }
 
     public function favorites()
@@ -113,10 +115,9 @@ class User extends Authenticatable
     public function voteQuestion(Question $question, $vote)
     {
         $voteQuestions = $this->voteQuestions();
-        if($voteQuestions->where('votable_id', $question->id)->exists() ){
+        if ($voteQuestions->where('votable_id', $question->id)->exists()) {
             $voteQuestions->updateExistingPivot($question, ['vote' => $vote]);
-        }
-        else{
+        } else {
             $voteQuestions->attach($question, ['vote' => $vote]);
         }
         $question->load('votes');
@@ -124,8 +125,21 @@ class User extends Authenticatable
         $upVotes = (int) $question->upVotes()->sum('vote');
         $question->votes_count = $upVotes + $downVotes;
         $question->save();
+    }
 
-
+    public function voteAnswer(Answer $answer, $vote)
+    {
+        $voteAnswers = $this->voteAnswers();
+        if ($voteAnswers->where('votable_id', $answer->id)->exists()) {
+            $voteAnswers->updateExistingPivot($answer, ['vote' => $vote]);
+        } else {
+            $voteAnswers->attach($answer, ['vote' => $vote]);
+        }
+        $answer->load('votes');
+        $downVotes = (int) $answer->downVotes()->sum('vote');
+        $upVotes = (int) $answer->upVotes()->sum('vote');
+        $answer->votes_count = $upVotes + $downVotes;
+        $answer->save();
     }
 
 }
