@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFavoritesTable extends Migration
+class RenameVotesOnQuestionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateFavoritesTable extends Migration
      */
     public function up()
     {
-        Schema::create('favorites', function (Blueprint $table) {
-            $table->foreignId('user_id');
-            $table->foreignId('question_id');
-            $table->timestamps();
-            $table->unique(['user_id','question_id']);
+        Schema::table('questions', function (Blueprint $table) {
+            $table->renameColumn('votes', 'votes_count');
         });
     }
 
@@ -28,6 +25,8 @@ class CreateFavoritesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favorites');
+        Schema::table('questions', function (Blueprint $table) {
+            $table->renameColumn('votes_count', 'votes');
+        });
     }
 }

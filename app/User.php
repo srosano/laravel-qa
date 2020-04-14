@@ -6,6 +6,42 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * App\User
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string|null $remember_token
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Answer[] $answers
+ * @property-read int|null $answers_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Question[] $favorites
+ * @property-read int|null $favorites_count
+ * @property-read mixed $avatar
+ * @property-read mixed $url
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Question[] $questions
+ * @property-read int|null $questions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Answer[] $voteAnswers
+ * @property-read int|null $vote_answers_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Question[] $voteQuestions
+ * @property-read int|null $vote_questions_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -61,7 +97,35 @@ class User extends Authenticatable
 
     public function favorites()
     {
-        return $this-> belongsToMany(Question::class, 'favorites')->withTimestamps(); // , 'author_id', 'question_id');
+        return $this->belongsToMany('App\Question', 'favorites')->withTimestamps(); // , 'author_id', 'question_id');
+    }
+
+    public function voteQuestions()
+    {
+        return $this->morphedByMany('App\Question', 'votable');
+    }
+
+    public function voteAnswers()
+    {
+        return $this->morphedByMany('App\Answer', 'votable');
+    }
+
+    public function voteQuestion(Question $question, $vote)
+    {
+        $voteQuestions = $this->voteQuestions();
+        if($voteQuestions->where('votable_id', $question->id)->exists() ){
+            $voteQuestions->updateExistingPivot($question, ['vote' => $vote]);
+        }
+        else{
+            $voteQuestions->attach($question, ['vote' => $vote]);
+        }
+        $question->load('votes');
+        $downVotes = (int) $question->downVotes()->sum('vote');
+        $upVotes = (int) $question->upVotes()->sum('vote');
+        $question->votes_count = $upVotes + $downVotes;
+        $question->save();
+
+
     }
 
 }

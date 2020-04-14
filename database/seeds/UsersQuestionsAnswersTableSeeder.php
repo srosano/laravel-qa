@@ -17,7 +17,7 @@ class UsersQuestionsAnswersTableSeeder extends Seeder
 
 
 
-        // $this->call(UsersTableSeeder::class);
+
         factory(App\User::class, 3)->create()->each(function ($u) {
             $u->questions()
                 ->saveMany(

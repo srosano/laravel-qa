@@ -4,6 +4,35 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Answer
+ *
+ * @property int $id
+ * @property int $question_id
+ * @property int $user_id
+ * @property string $body
+ * @property-read int|null $votes_count
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read mixed $body_html
+ * @property-read mixed $created_date
+ * @property-read mixed $is_best
+ * @property-read mixed $status
+ * @property-read \App\Question $question
+ * @property-read \App\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $votes
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer whereBody($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer whereQuestionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Answer whereVotesCount($value)
+ * @mixin \Eloquent
+ */
 class Answer extends Model
 {
     protected $fillable = ['body','user_id'];
@@ -47,6 +76,11 @@ class Answer extends Model
 
     public function isBest(){
         return $this->id === $this->question->best_answer_id;
+    }
+
+    public function votes()
+    {
+        return $this->morphToMany('App\User', 'votable');
     }
 
 }
