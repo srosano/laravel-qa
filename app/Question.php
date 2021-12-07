@@ -48,34 +48,37 @@ use Illuminate\Support\Str;
  */
 class Question extends Model
 {
+    use VotableTrait;
+
     protected $fillable = ['title', 'body'];
 
-    public function user() {
+    public function user()
+    {
 
         return $this->belongsTo(User::class);
-
     }
 
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;
         $this->attributes['slug'] = Str::slug($value);
-
     }
 
-    public function getUrlAttribute(){
+    public function getUrlAttribute()
+    {
         return route("questions.show", $this->slug);
     }
 
 
-    public function getCreatedDateAttribute(){
+    public function getCreatedDateAttribute()
+    {
         return $this->created_at->diffForHumans();
     }
 
     public function getStatusAttribute()
     {
-        if($this->answers_count > 0){
-            if($this->best_answer_id){
+        if ($this->answers_count > 0) {
+            if ($this->best_answer_id) {
                 return "answered-accepted";
             }
             return "answered";
@@ -83,23 +86,24 @@ class Question extends Model
         return "unanswered";
     }
 
-    public function getBodyHtmlAttribute(){
-       #\Debugbar::info(\Parsedown::instance());
+    public function getBodyHtmlAttribute()
+    {
+        #\Debugbar::info(\Parsedown::instance());
 
-       return \Parsedown::instance()->text($this->body);
-
+        return \Parsedown::instance()->text($this->body);
     }
 
-    public function answers(){
+    public function answers()
+    {
         return $this->hasMany(Answer::class);
         // $question->answers()->count()
         // foreach($question->answers as $answer)
     }
 
-    public function acceptBestAnswer(Answer $answer){
+    public function acceptBestAnswer(Answer $answer)
+    {
         $this->best_answer_id = $answer->id;
         $this->save();
-
     }
 
     public function favorites()
@@ -121,20 +125,4 @@ class Question extends Model
     {
         return $this->favorites->count();
     }
-
-    public function votes()
-    {
-        return $this->morphToMany('App\User', 'votable');
-    }
-
-    public function upVotes()
-    {
-        return $this->votes()->wherePivot('vote', 1);
-    }
-
-    public function downVotes()
-    {
-        return $this->votes()->wherePivot('vote', -1);
-    }
-
 }
