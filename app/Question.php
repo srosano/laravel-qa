@@ -89,8 +89,7 @@ class Question extends Model
     public function getBodyHtmlAttribute()
     {
         #\Debugbar::info(\Parsedown::instance());
-
-        return \Parsedown::instance()->text($this->body);
+        return clean($this->bodyHtml());
     }
 
     public function answers()
@@ -121,8 +120,18 @@ class Question extends Model
         return $this->isFavorited();
     }
 
-    public function getFavoritesCountAttribute()
+    public function getExcerptAtrribute()
     {
-        return $this->favorites->count();
+        return $this->excerpt(250);
+    }
+
+    public function excerpt($length)
+    {
+        return Str::limit(strip_tags($this->bodyHtml()), $length);
+    }
+
+    private function bodyHtml()
+    {
+        return \Parsedown::instance()->text($this->body);
     }
 }
