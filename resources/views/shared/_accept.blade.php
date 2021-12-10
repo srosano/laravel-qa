@@ -21,4 +21,5 @@
 >
     <i class="fa fa-check fa-2x"></i>
 </a>
-@endif @endcan
+@endif
+@endcan

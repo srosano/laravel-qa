@@ -56,6 +56,7 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
+    protected $appends = ['url', 'avatar'];
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -127,7 +128,7 @@ class User extends Authenticatable
         $this->_vote($voteAnswers, $answer, $vote);
     }
 
-    private function _vote( $relationship, $model, $vote)
+    private function _vote($relationship, $model, $vote)
     {
         if ($relationship->where('votable_id', $model->id)->exists()) {
             $relationship->updateExistingPivot($model, ['vote' => $vote]);
@@ -140,5 +141,4 @@ class User extends Authenticatable
         $model->votes_count = $upVotes + $downVotes;
         $model->save();
     }
-
 }
