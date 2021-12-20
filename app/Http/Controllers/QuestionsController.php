@@ -70,6 +70,7 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
+        $this->authorize("update", $question);
         return view("questions.edit", compact('question'));
     }
 
@@ -86,7 +87,7 @@ class QuestionsController extends Controller
 
         $question->update($request->only('title', 'body'));
 
-        return redirect('/questions')->with('success', 'Your Question has been updated.');
+        return redirect('/questions')->with('success', "Your Question has been updated.");
     }
 
     /**
@@ -101,6 +102,6 @@ class QuestionsController extends Controller
 
         $question->delete();
 
-        return redirect('/questions')->with('success', 'Your Question has been deleted.');
+        return redirect('/questions')->with('success', "Your Question has been deleted.");
     }
 }

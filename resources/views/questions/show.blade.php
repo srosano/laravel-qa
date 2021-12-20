@@ -1,4 +1,5 @@
-@extends('layouts.app') @section('content')
+@extends('layouts.app')
+@section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -8,11 +9,7 @@
                         <div class="d-flex align-items-center">
                             <h1>{{ $question->title }}</h1>
                             <div class="ml-auto">
-                                <a
-                                    href="{{ route('questions.index') }}"
-                                    class="btn btn-outline-secondary"
-                                    >Back to all Question</a
-                                >
+                                <a href="{{ route('questions.index') }}" class="btn btn-outline-secondary">Back to all Question</a>
                             </div>
                         </div>
                     </div>
@@ -23,7 +20,7 @@
                         @include ('shared._vote',[ 'model' => $question ])
                         <div class="media-body">
                             {!! $question->body_html !!}
-                            <div id="row">
+                            <div class="row">
                                 <div class="col-4"></div>
                                 <div class="col-4"></div>
                                 <div class="col-4">

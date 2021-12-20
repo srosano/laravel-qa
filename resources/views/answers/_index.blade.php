@@ -1,5 +1,5 @@
-@if($answersCount > 0)
-<div class="row mt-4">
+@if ($answersCount > 0)
+<div class="row mt-4 v-cloak">
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
@@ -13,7 +13,6 @@
 
                 @foreach ($answers as $answer)
                     @include ('answers._answer')
-                <hr />
                 @endforeach
             </div>
         </div>

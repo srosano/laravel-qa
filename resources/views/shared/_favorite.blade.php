@@ -4,9 +4,6 @@
     onclick="event.preventDefault(); document.getElementById('favorite-question-{{ $model->id }}').submit();"
 >
     <i class="fa fa-star fa-2x"></i>
-    <!--@php
-                                Debugbar::info($model->favorites_count);
-                                @endphp-->
     <span class="favorites-count">{{ $model->favorites_count }}</span>
 </a>
 <form

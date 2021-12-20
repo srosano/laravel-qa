@@ -44,7 +44,7 @@ $formAction = "/{$firstURISegment}/{$model->id}/vote";
            value="-1" />
   </form>
   @if ($model instanceof App\Question)
-  @include ('shared._favourite',[ 'model' => $model ])
+  @include ('shared._favorite',[ 'model' => $model ])
   @elseif ($model instanceof App\Answer)
   @include('shared._accept',[ 'model' => $model ])
   @endif

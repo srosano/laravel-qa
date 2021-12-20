@@ -90,13 +90,12 @@ class Question extends Model
 
     public function getBodyHtmlAttribute()
     {
-        #\Debugbar::info(\Parsedown::instance());
         return clean($this->bodyHtml());
     }
 
     public function answers()
     {
-        return $this->hasMany(Answer::class)->orderBy('votes_count', 'DESC');;
+        return $this->hasMany(Answer::class)->orderBy('votes_count', 'DESC');
         // $question->answers()->count()
         // foreach($question->answers as $answer)
     }
@@ -122,7 +121,12 @@ class Question extends Model
         return $this->isFavorited();
     }
 
-    public function getExcerptAtrribute()
+    public function getFavoritesCountAttribute()
+    {
+        return $this->favorites->count();
+    }
+
+    public function getExcerptAttribute()
     {
         return $this->excerpt(250);
     }
