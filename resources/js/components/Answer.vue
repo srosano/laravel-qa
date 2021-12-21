@@ -31,7 +31,7 @@ export default {
       //  evaluated (executed) by the shell before the main command
       console.log(this.questionId);
       axios
-        .patch(`/questions/${this.questionId}/answers/${this.id}`, {
+        .patch(this.endpoint, {
           body: this.body,
         })
         .then((response) => {
@@ -48,10 +48,22 @@ export default {
           alert(err.response.data.message);
         });
     },
+    destroy() {
+      if (confirm("Are you sure?")) {
+        axios.delete(this.enpoint).then((response) => {
+          $(this.$el).fadeOut(500, () => {
+            alert(response.data.message);
+          });
+        });
+      }
+    },
   },
   computed: {
     isInvalid() {
       return this.body.length < 10;
+    },
+    enpoint() {
+      return `/questions/${this.questionId}/answers/${this.id}`;
     },
   },
 };

@@ -11382,7 +11382,7 @@ __webpack_require__.r(__webpack_exports__);
       // Template literals Template literals can contain placeholders and
       //  evaluated (executed) by the shell before the main command
       console.log(this.questionId);
-      axios.patch("/questions/".concat(this.questionId, "/answers/").concat(this.id), {
+      axios.patch(this.endpoint, {
         body: this.body
       }).then(function (response) {
         console.log(response);
@@ -11396,11 +11396,25 @@ __webpack_require__.r(__webpack_exports__);
 
         alert(err.response.data.message);
       });
+    },
+    destroy: function destroy() {
+      var _this2 = this;
+
+      if (confirm("Are you sure?")) {
+        axios["delete"](this.enpoint).then(function (response) {
+          $(_this2.$el).fadeOut(500, function () {
+            alert(response.data.message);
+          });
+        });
+      }
     }
   },
   computed: {
     isInvalid: function isInvalid() {
       return this.body.length < 10;
+    },
+    enpoint: function enpoint() {
+      return "/questions/".concat(this.questionId, "/answers/").concat(this.id);
     }
   }
 });
