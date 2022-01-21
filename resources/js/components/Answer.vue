@@ -14,7 +14,7 @@ export default {
   },
   created() {
     var test = `questions/${this.questionId}/answers/${this.id}`;
-    console.log(test);
+    //console.log(test);
   },
 
   methods: {
@@ -29,7 +29,7 @@ export default {
     update() {
       // Template literals Template literals can contain placeholders and
       //  evaluated (executed) by the shell before the main command
-      console.log(this.questionId);
+      //console.log(this.questionId);
       axios
         .patch(this.endpoint, {
           body: this.body,

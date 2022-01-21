@@ -12,7 +12,7 @@
 export default {
   props: ["question"],
   mounted() {
-    console.log(`/questions/${this.id}/favorites`);
+    //console.log(`/questions/${this.id}/favorites`);
   },
   data() {
     return {
@@ -59,7 +59,7 @@ export default {
     },
     create() {
       console.log(this.endpoint);
-      require("axios-debug-log/enable");
+      //require("axios-debug-log/enable");
       axios
         .post(this.endpoint)
         .then((response) => {
