@@ -25,11 +25,17 @@
   </div>
 </template>
 <script>
-import Favorite from "./Favorite.vue";
-import Accept from "./Accept.vue";
+import favorite from "./Favorite.vue";
+import accept from "./Accept.vue";
 export default {
+  components: {
+    favorite,
+    accept,
+  },
   props: ["name", "model"],
-
+  mounted() {
+    console.log("RUNNNING VOTE VUE !!!!");
+  },
   computed: {
     classes() {
       return this.signedIn ? "" : "off";
@@ -38,11 +44,6 @@ export default {
     endpoint() {
       return `/${this.name}s/${this.id}/vote`;
     },
-  },
-
-  components: {
-    Favorite,
-    Accept,
   },
 
   data() {

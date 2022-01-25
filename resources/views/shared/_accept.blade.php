@@ -4,7 +4,7 @@
     class="{{ $model->status }} mt-2"
     onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $model->id }}').submit();"
 >
-    <i class="fa fa-check fa-2x"></i>
+    <i class="fas fa-check fa-2x"></i>
 </a>
 <form
     id="accept-answer-{{ $model->id }}"
@@ -16,10 +16,10 @@
 </form>
 @else @if ($model->is_best)
 <a
-    title="The question owner accept this answer as best answer"
+    title="The question owner accepted this answer as best answer"
     class="{{ $model->status }} mt-2"
 >
-    <i class="fa fa-check fa-2x"></i>
+    <i class="fas fa-check fa-2x"></i>
 </a>
 @endif
 @endcan

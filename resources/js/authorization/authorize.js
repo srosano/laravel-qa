@@ -18,13 +18,13 @@ export default {
    // Vue.prototype.$appName
    // In this case we create authorize() function that takes policy and model as defined in policies.js
     Vue.prototype.authorize = function(policy, model) {
-      if (!window.Auth.signedIn) {
-        return false;
-      }
+      if (!window.Auth.signedIn) return false;
+
 
       if (typeof policy === "string" && typeof model === "object") {
         const user = window.Auth.user;
-
+        var temp = policies[policy](user, model);
+        console.log(temp);
         return policies[policy](user, model);
       }
     };

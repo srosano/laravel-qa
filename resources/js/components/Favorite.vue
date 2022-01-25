@@ -12,7 +12,7 @@
 export default {
   props: ["question"],
   mounted() {
-    //console.log(`/questions/${this.id}/favorites`);
+    console.log("RUNNNING!!!!");
   },
   data() {
     return {
