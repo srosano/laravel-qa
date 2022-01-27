@@ -1,6 +1,6 @@
 // This our own Vue Plugin
 
-import "./policies.js";
+import policies from "./policies.js";
 
 export default {
   // called by Vue.use(authorize)
@@ -20,12 +20,16 @@ export default {
     Vue.prototype.authorize = function(policy, model) {
       if (!window.Auth.signedIn) return false;
 
-
       if (typeof policy === "string" && typeof model === "object") {
         const user = window.Auth.user;
-        var temp = policies[policy](user, model);
-        console.log(temp);
-        return policies[policy](user, model);
+        //var temp = policies[policy](user, model);
+        //console.log("user:");
+        //console.log(user); // calls the signedIn user
+        //console.log("model:"); // contains the contents of the answers
+        //console.log(model);
+        //console.log("final:");
+        //console.log(temp);
+        return policies[policy](user, model); // evaluates either true or false
       }
     };
     Vue.prototype.signedIn = window.Auth.signedIn;
