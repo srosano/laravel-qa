@@ -48,7 +48,7 @@ export default {
             position: "bottomLeft",
           });
           this.isBest = true;
-
+          // replace with mitt library
           EventBus.$emit("accepted", this.id);
         })
         .catch((err) => {
