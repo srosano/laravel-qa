@@ -70,14 +70,14 @@
     ],
     "post-update-cmd": [
       "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-      "if [ $COMPOSER_DEV_MODE -eq 1 ]; then @php artisan ide-helper:generate; fi",
-      "if [ $COMPOSER_DEV_MODE -eq 1 ]; then @php artisan ide-helper:meta; fi",
-      "if [ $COMPOSER_DEV_MODE -eq 1 ]; then @php artisan ide-helper:models --nowrite; fi"
+      "[ $COMPOSER_DEV_MODE -eq 1 ] || @php artisan ide-helper:generate",
+      "[ $COMPOSER_DEV_MODE -eq 1 ] || @php artisan ide-helper:meta",
+      "[ $COMPOSER_DEV_MODE -eq 1 ] || @php artisan ide-helper:models --nowrite"
     ],
     "post-install-cmd": [
-      "if [ $COMPOSER_DEV_MODE -eq 0 ]; then @php artisan ide-helper:generate; fi",
-      "if [ $COMPOSER_DEV_MODE -eq 0 ]; then @php artisan ide-helper:meta; fi",
-      "if [ $COMPOSER_DEV_MODE -eq 0 ]; then @php artisan ide-helper:models --nowrite; fi"
+      "[ $COMPOSER_DEV_MODE -eq 1 ] || @php artisan ide-helper:generate",
+      "[ $COMPOSER_DEV_MODE -eq 1 ] || @php artisan ide-helper:meta",
+      "[ $COMPOSER_DEV_MODE -eq 1 ] || @php artisan ide-helper:models --nowrite"
     ]
   }
 }
